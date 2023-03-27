@@ -24,15 +24,15 @@ import java.util.NoSuchElementException;
  * @author Sean Owen
  * @since 1.6
  */
-final class EmptyEnumeration implements Enumeration<Object> {
+final class EmptyEnumeration implements Enumeration<String> {
 
-    private static final Enumeration<?> instance = new EmptyEnumeration();
+    private static final Enumeration<String> instance = new EmptyEnumeration();
 
     private EmptyEnumeration() {
         // do nothing
     }
 
-    public static Enumeration<?> getInstance() {
+    public static Enumeration<String> getInstance() {
         return instance;
     }
 
@@ -46,7 +46,7 @@ final class EmptyEnumeration implements Enumeration<Object> {
     /**
      * @throws NoSuchElementException always
      */
-    public Object nextElement() {
+    public String nextElement() {
         throw new NoSuchElementException();
     }
 

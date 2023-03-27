@@ -22,9 +22,9 @@ import com.mockrunner.servlet.ServletTestModule;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Random;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Can be used to generate load on {@link CompressingFilter}.

@@ -18,17 +18,18 @@ package com.github.ziplet.filter.compression;
 import com.github.ziplet.filter.compression.statistics.CompressingFilterEmptyStats;
 import com.github.ziplet.filter.compression.statistics.CompressingFilterStats;
 import com.github.ziplet.filter.compression.statistics.CompressingFilterStatsImpl;
+import jakarta.servlet.FilterConfig;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.zip.Deflater;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Encapsulates the {@link CompressingFilter} environment, including configuration and runtime

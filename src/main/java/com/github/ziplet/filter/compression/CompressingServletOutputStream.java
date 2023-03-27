@@ -15,11 +15,13 @@
  */
 package com.github.ziplet.filter.compression;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import javax.servlet.ServletOutputStream;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * Implementation of {@link ServletOutputStream} which will optionally compress data written to it.
@@ -39,9 +41,9 @@ final class CompressingServletOutputStream extends ServletOutputStream {
     private boolean aborted;
 
     CompressingServletOutputStream(OutputStream rawStream,
-        CompressingStreamFactory compressingStreamFactory,
-        CompressingHttpServletResponse compressingResponse,
-        CompressingFilterContext context) {
+                                   CompressingStreamFactory compressingStreamFactory,
+                                   CompressingHttpServletResponse compressingResponse,
+                                   CompressingFilterContext context) {
         this.rawStream = rawStream;
         this.compressingStreamFactory = compressingStreamFactory;
         this.compressingResponse = compressingResponse;
@@ -81,10 +83,10 @@ final class CompressingServletOutputStream extends ServletOutputStream {
 
     @Override
     public void close() throws IOException {
-        if (!closed) {
+        if(!closed) {
             compressingResponse.flushBuffer();
             closed = true;
-            if (thresholdOutputStream == null) {
+            if(thresholdOutputStream == null) {
                 // Nothing written, so, signal that effectively the 'raw' output stream was used and close it
                 compressingResponse.rawStreamCommitted();
                 rawStream.close();
@@ -105,7 +107,7 @@ final class CompressingServletOutputStream extends ServletOutputStream {
 
     void reset() {
         // can't reset rawStream, so do nothing if compressionDisabled, else:
-        if (thresholdOutputStream != null) {
+        if(thresholdOutputStream != null) {
             thresholdOutputStream.reset();
         }
     }
@@ -129,7 +131,7 @@ final class CompressingServletOutputStream extends ServletOutputStream {
     }
 
     private void checkWriteState() {
-        if (thresholdOutputStream == null) {
+        if(thresholdOutputStream == null) {
             thresholdOutputStream =
                 new ThresholdOutputStream(rawStream,
                     compressingStreamFactory,
@@ -139,9 +141,19 @@ final class CompressingServletOutputStream extends ServletOutputStream {
     }
 
     private void checkClosed() throws IOException {
-        if (closed) {
+        if(closed) {
             throw new IOException("Stream is already closed");
         }
+    }
+
+    @Override
+    public boolean isReady() {
+        throw new IllegalStateException("unimplemented: ");
+    }
+
+    @Override
+    public void setWriteListener(WriteListener writeListener) {
+        throw new IllegalStateException("unimplemented: ");
     }
 
     private static final class ResponseBufferCommitmentCallback

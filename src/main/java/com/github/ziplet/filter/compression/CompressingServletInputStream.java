@@ -15,9 +15,11 @@
  */
 package com.github.ziplet.filter.compression;
 
+import jakarta.servlet.ReadListener;
+import jakarta.servlet.ServletInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import javax.servlet.ServletInputStream;
 
 /**
  * <p>Implementation of {@link ServletInputStream} which will decompress data read from it.</p>
@@ -96,7 +98,7 @@ final class CompressingServletInputStream extends ServletInputStream {
     }
 
     private void checkClosed() {
-        if (closed) {
+        if(closed) {
             throw new IllegalStateException("Stream is already closed");
         }
     }
@@ -104,5 +106,20 @@ final class CompressingServletInputStream extends ServletInputStream {
     @Override
     public String toString() {
         return "CompressingServletInputStream";
+    }
+
+    @Override
+    public boolean isFinished() {
+        throw new IllegalStateException("unimplemented: ");
+    }
+
+    @Override
+    public boolean isReady() {
+        throw new IllegalStateException("unimplemented: ");
+    }
+
+    @Override
+    public void setReadListener(ReadListener readListener) {
+        throw new IllegalStateException("unimplemented: ");
     }
 }

@@ -15,16 +15,17 @@
  */
 package com.github.ziplet.filter.compression;
 
+import jakarta.servlet.ServletInputStream;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
-import javax.servlet.ServletInputStream;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * <p>Implementation of {@link HttpServletRequest} which can decompress request bodies that have
@@ -99,9 +100,9 @@ final class CompressedHttpServletRequest extends HttpServletRequestWrapper {
     }
 
     @Override
-    public Enumeration<?> getHeaders(String header) {
-        Enumeration<?> original = super.getHeaders(header);
-        if (original == null) {
+    public Enumeration<String> getHeaders(String header) {
+        Enumeration<String> original = super.getHeaders(header);
+        if(original == null) {
             return null; // match container's behavior exactly in this case
         }
         return isFilteredHeader(header) ? EmptyEnumeration.getInstance() : original;
@@ -118,15 +119,15 @@ final class CompressedHttpServletRequest extends HttpServletRequestWrapper {
     }
 
     @Override
-    public Enumeration<?> getHeaderNames() {
+    public Enumeration<String> getHeaderNames() {
         Enumeration<?> original = super.getHeaderNames();
-        if (original == null) {
+        if(original == null) {
             return null; // match container's behavior exactly in this case
         }
         Collection<String> headerNames = new ArrayList<String>();
-        while (original.hasMoreElements()) {
+        while(original.hasMoreElements()) {
             String headerName = (String) original.nextElement();
-            if (!isFilteredHeader(headerName)) {
+            if(!isFilteredHeader(headerName)) {
                 headerNames.add(headerName);
             }
         }

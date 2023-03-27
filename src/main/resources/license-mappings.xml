@@ -28,7 +28,7 @@
     <!-- http://stackoverflow.com/questions/16343572/license-for-glassfish-javax-servlet-servlet-api-version-2-5 -->
     <!-- https://glassfish.java.net/nonav/public/CDDL+GPL.html -->
     <artifact>
-        <groupId>javax.servlet</groupId>
+        <groupId>jakarta.servlet</groupId>
         <artifactId>servlet-api</artifactId>
         <version>2.5</version>
         <license>CDDL 1.1 or GPL2 w/ CPE</license>
